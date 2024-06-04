@@ -7,7 +7,7 @@ int **generateObjectArray(int sizeOfObject)
 {
     // An object is a 2d array with n*n 3d vectors
     int numberOfVectors = sizeOfObject * sizeOfObject;
-    
+
     // Allocate memory for top level array
     int **matrix = (int **)malloc(numberOfVectors * sizeof(int *));
     if (matrix == NULL)
@@ -50,4 +50,50 @@ int freeObjectArray(int sizeOfObject, int **objectArray)
     free(objectArray);
 
     return 0;
+}
+
+int transformObjectArrayToSquare(int sizeOfObject, int **objectArray)
+{
+    for (int i = 0; i < sizeOfObject; i++)
+    {
+        for (int j = 0; j < sizeOfObject; j++)
+        {
+            int currentIndex = j + i * sizeOfObject;
+            int *currentVector = objectArray[currentIndex];
+            currentVector[0] = i;
+            currentVector[1] = j;
+            currentVector[2] = 0;
+        }
+    }
+    return 0;
+}
+
+int printObjectArray(int sizeOfObject, int **objectArray)
+{
+    int numberOfVectors = sizeOfObject * sizeOfObject;
+
+    printf("Vectors:\n");
+
+    for (int i = 0; i < numberOfVectors; i++)
+    {
+        printf("%d,%d,%d\n", objectArray[i][0], objectArray[i][1], objectArray[i][2]);
+    }
+    return 0;
+}
+
+int centerObjectArray(int sizeOfObject, int **objectArray)
+{
+    for (int i = 0; i < sizeOfObject * sizeOfObject; i++)
+    {
+        objectArray[i][0] = objectArray[i][0] - sizeOfObject / 2;
+        objectArray[i][1] = objectArray[i][1] - sizeOfObject / 2;
+    }
+}
+
+int moveObjectRight(int sizeOfObject, int **objectArray)
+{
+    for (int i = 0; i < sizeOfObject * sizeOfObject; i++)
+    {
+        objectArray[i][0] = objectArray[i][0] + 1;
+    }
 }

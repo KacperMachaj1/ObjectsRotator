@@ -4,7 +4,9 @@
 // Window dimensions
 const int WIDTH = 800;
 const int HEIGHT = 800;
-const int OBJECTSIZE = 200;
+const int OBJECTSIZE = 300;
+
+void displayObject(int **object, SDL_Renderer *renderer);
 
 // Function to set pixel color at (x, y) coordinates
 void setPixel(SDL_Renderer *renderer, int x, int y, Uint8 r, Uint8 g, Uint8 b)
@@ -16,7 +18,9 @@ void setPixel(SDL_Renderer *renderer, int x, int y, Uint8 r, Uint8 g, Uint8 b)
 int main()
 {
     int **object = (int **)generateObjectArray(OBJECTSIZE);
-    freeObjectArray(OBJECTSIZE, object);
+    transformObjectArrayToSquare(OBJECTSIZE, object);
+    printObjectArray(OBJECTSIZE, object);
+    centerObjectArray(OBJECTSIZE, object);
 
     // Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
@@ -61,6 +65,11 @@ int main()
         // Clear the screen
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
         SDL_RenderClear(renderer);
+
+        // Display the object on the screen
+        displayObject(object, renderer);
+        moveObjectRight(OBJECTSIZE, object);
+
         // Update the screen
         SDL_RenderPresent(renderer);
     }
@@ -70,5 +79,15 @@ int main()
     SDL_DestroyWindow(window);
     SDL_Quit();
 
+    freeObjectArray(OBJECTSIZE, object);
+
     return 0;
+}
+
+void displayObject(int **object, SDL_Renderer *renderer)
+{
+    for (int i = 0; i < OBJECTSIZE * OBJECTSIZE; i++)
+    {
+        setPixel(renderer, WIDTH - (object[i][0] + WIDTH / 2), HEIGHT - (object[i][1] + HEIGHT / 2), 255, 255, 255);
+    }
 }
