@@ -15,11 +15,10 @@ void setPixel(SDL_Renderer *renderer, int x, int y, Uint8 r, Uint8 g, Uint8 b)
     SDL_RenderDrawPoint(renderer, x, y);
 }
 
-int main()
+int main(int argc, char **argv)
 {
     int **object = (int **)generateObjectArray(OBJECTSIZE);
     transformObjectArrayToSquare(OBJECTSIZE, object);
-    printObjectArray(OBJECTSIZE, object);
     centerObjectArray(OBJECTSIZE, object);
 
     // Initialize SDL
@@ -68,7 +67,7 @@ int main()
 
         // Display the object on the screen
         displayObject(object, renderer);
-        moveObjectRight(OBJECTSIZE, object);
+        moveObjectUp(OBJECTSIZE, object, 3);
 
         // Update the screen
         SDL_RenderPresent(renderer);
@@ -88,6 +87,6 @@ void displayObject(int **object, SDL_Renderer *renderer)
 {
     for (int i = 0; i < OBJECTSIZE * OBJECTSIZE; i++)
     {
-        setPixel(renderer, WIDTH - (object[i][0] + WIDTH / 2), HEIGHT - (object[i][1] + HEIGHT / 2), 255, 255, 255);
+        setPixel(renderer, object[i][0] + WIDTH / 2, HEIGHT - (object[i][1] + HEIGHT / 2), 255, 255, 255);
     }
 }
