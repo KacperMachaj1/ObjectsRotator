@@ -1,4 +1,5 @@
 #include <SDL2/SDL.h>
+#include "objectGenerator.h"
 
 // Window dimensions
 const int WIDTH = 800;
@@ -13,6 +14,8 @@ void setPixel(SDL_Renderer *renderer, int x, int y, Uint8 r, Uint8 g, Uint8 b)
 
 int main()
 {
+    function1();
+
     // Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
