@@ -1,6 +1,8 @@
 #ifndef OBJECTGENERATOR_H
 #define OBJECTGENERATOR_H
 
-void function1();
+int** generateObjectArray(int sizeOfObject);
+
+int freeObjectArray(int sizeOfObject, int **objectArray);
 
 #endif

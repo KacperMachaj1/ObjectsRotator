@@ -4,6 +4,7 @@
 // Window dimensions
 const int WIDTH = 800;
 const int HEIGHT = 800;
+const int OBJECTSIZE = 200;
 
 // Function to set pixel color at (x, y) coordinates
 void setPixel(SDL_Renderer *renderer, int x, int y, Uint8 r, Uint8 g, Uint8 b)
@@ -14,7 +15,8 @@ void setPixel(SDL_Renderer *renderer, int x, int y, Uint8 r, Uint8 g, Uint8 b)
 
 int main()
 {
-    function1();
+    int **object = (int **)generateObjectArray(OBJECTSIZE);
+    freeObjectArray(OBJECTSIZE, object);
 
     // Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
