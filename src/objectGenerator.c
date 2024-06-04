@@ -90,10 +90,18 @@ int centerObjectArray(int sizeOfObject, int **objectArray)
     }
 }
 
-int moveObjectRight(int sizeOfObject, int **objectArray)
+int moveObjectRight(int sizeOfObject, int **objectArray, int displacement)
 {
     for (int i = 0; i < sizeOfObject * sizeOfObject; i++)
     {
-        objectArray[i][0] = objectArray[i][0] + 1;
+        objectArray[i][0] = objectArray[i][0] + displacement;
+    }
+}
+
+int moveObjectUp(int sizeOfObject, int **objectArray, int displacement)
+{
+    for (int i = 0; i < sizeOfObject * sizeOfObject; i++)
+    {
+        objectArray[i][1] = objectArray[i][1] + displacement;
     }
 }
