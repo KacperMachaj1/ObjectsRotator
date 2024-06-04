@@ -1,10 +1,11 @@
 #include <SDL2/SDL.h>
 #include "objectGenerator.h"
+#include<unistd.h>
 
 // Window dimensions
 const int WIDTH = 800;
 const int HEIGHT = 800;
-const int OBJECTSIZE = 300;
+const int OBJECTSIZE = 200;
 
 void displayObject(int **object, SDL_Renderer *renderer);
 
@@ -67,10 +68,11 @@ int main(int argc, char **argv)
 
         // Display the object on the screen
         displayObject(object, renderer);
-        moveObjectUp(OBJECTSIZE, object, 3);
+        objectYawRotation(OBJECTSIZE, object, 0.3);
 
         // Update the screen
         SDL_RenderPresent(renderer);
+        //sleep(1);
     }
 
     // Cleanup

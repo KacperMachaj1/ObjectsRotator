@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "objectGenerator.h"
 
@@ -104,4 +105,14 @@ int moveObjectUp(int sizeOfObject, int **objectArray, int displacement)
     {
         objectArray[i][1] = objectArray[i][1] + displacement;
     }
+}
+
+int objectYawRotation(int sizeOfObject, int **objectArray, float angle)
+{
+    for (int i = 0; i < sizeOfObject * sizeOfObject; i++)
+    {
+        objectArray[i][0] = floor(objectArray[i][0] * cos(angle) - objectArray[i][1] * sin(angle));
+        objectArray[i][1] = floor(objectArray[i][0] * sin(angle) + objectArray[i][1] * cos(angle));
+    }
+    return 0;
 }
