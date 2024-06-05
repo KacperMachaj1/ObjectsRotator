@@ -73,7 +73,7 @@ int main(int argc, char **argv)
         }
 
         // Clear the screen
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+        SDL_SetRenderDrawColor(renderer, 0,36,107, SDL_ALPHA_OPAQUE);
         SDL_RenderClear(renderer);
 
         // Display the object on the screen
@@ -81,8 +81,10 @@ int main(int argc, char **argv)
 
         // Update the screen
         SDL_RenderPresent(renderer);
-        sleep(0.1);
-        rotationVector[0] = rotationVector[0] + 0.1;
+        //sleep(0.1);
+        rotationVector[0] = rotationVector[0] + 0.01;
+        rotationVector[1] = rotationVector[1] + 0.01;
+        //rotationVector[2] = rotationVector[2] + 0.1;
     }
 
     // Cleanup
@@ -104,7 +106,7 @@ void displayObject(float **object, SDL_Renderer *renderer, float *rotationVector
     {
         memcpy(vectorBuffer, object[i], 3 * sizeof(float));
         rotateVector(vectorBuffer, rotationVector);
-        setPixel(renderer, floor(vectorBuffer[0] + WIDTH / 2), floor(HEIGHT - (vectorBuffer[1] + HEIGHT / 2)), 255, 255, 255);
+        setPixel(renderer, floor(vectorBuffer[0] + WIDTH / 2), floor(HEIGHT - (vectorBuffer[1] + HEIGHT / 2)), 202,220,252);
     }
 }
 
