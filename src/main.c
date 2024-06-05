@@ -110,10 +110,23 @@ void displayObject(float **object, SDL_Renderer *renderer, float *rotationVector
 
 int rotateVector(float *vector, float *angle)
 {
-    float newX = vector[0] * cosf(angle[0]) - vector[1] * sinf(angle[0]);
-    float newY = vector[0] * sinf(angle[0]) + vector[1] * cosf(angle[0]);
+    float sinA = sinf(angle[0]);
+    float cosA = cosf(angle[0]);
+    float sinB = sinf(angle[1]);
+    float cosB = cosf(angle[1]);
+    float sinC = sinf(angle[2]);
+    float cosC = cosf(angle[2]);
+    float x = vector[0];
+    float y = vector[1];
+    float z = vector[2];
+
+    float newX = x * (cosB * cosC) + y * (sinA * sinB * cosC - cosA * sinC) + z * (cosA * sinB * cosC + sinA * sinC);
+    float newY = x * (cosB * sinC) + y * (sinA * sinB * sinC + cosA * cosC) + z * (cosA * sinB * sinC - sinA * cosC);
+    float newZ = x * (-sinB) + y * (sinA * cosB) + z * (cosA * cosB);
+
     vector[0] = newX;
     vector[1] = newY;
+    vector[2] = newZ;
 
     return 0;
 }
