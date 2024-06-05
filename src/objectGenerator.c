@@ -4,14 +4,15 @@
 
 #include "objectGenerator.h"
 
-int **generateObjectArray(int sizeOfObject)
+float **generateObjectArray(int sizeOfObject)
 {
     // An object is a 2d array with n*n 3d vectors
     int numberOfVectors = sizeOfObject * sizeOfObject;
 
     // Allocate memory for top level array
-    int **matrix = (int **)malloc(numberOfVectors * sizeof(int *));
-    if (matrix == NULL)
+    float **objectArray = (float **)malloc(numberOfVectors * sizeof(float *));
+
+    if (objectArray == NULL)
     {
         fprintf(stderr, "Memory allocation failed\n");
         return 0;
@@ -20,26 +21,26 @@ int **generateObjectArray(int sizeOfObject)
     // Allocate memory for each vector
     for (int i = 0; i < numberOfVectors; i++)
     {
-        matrix[i] = (int *)malloc(3 * sizeof(int));
-        if (matrix[i] == NULL)
+        objectArray[i] = (float *)malloc(3 * sizeof(float));
+        if (objectArray[i] == NULL)
         {
             fprintf(stderr, "Memory allocation failed\n");
             // Free previously allocated rows
             for (int j = 0; j < i; j++)
             {
-                free(matrix[j]);
+                free(objectArray[j]);
             }
-            free(matrix);
+            free(objectArray);
             return 0;
         }
     }
 
     printf("Object array generated succesfully\n");
 
-    return matrix;
+    return objectArray;
 }
 
-int freeObjectArray(int sizeOfObject, int **objectArray)
+int freeObjectArray(int sizeOfObject, float **objectArray)
 {
     // An object is a 2d array with n*n 3d vectors
     int numberOfVectors = sizeOfObject * sizeOfObject;
@@ -53,14 +54,14 @@ int freeObjectArray(int sizeOfObject, int **objectArray)
     return 0;
 }
 
-int transformObjectArrayToSquare(int sizeOfObject, int **objectArray)
+int transformObjectArrayToSquare(int sizeOfObject, float **objectArray)
 {
     for (int i = 0; i < sizeOfObject; i++)
     {
         for (int j = 0; j < sizeOfObject; j++)
         {
             int currentIndex = j + i * sizeOfObject;
-            int *currentVector = objectArray[currentIndex];
+            float *currentVector = objectArray[currentIndex];
             currentVector[0] = i;
             currentVector[1] = j;
             currentVector[2] = 0;
@@ -69,7 +70,7 @@ int transformObjectArrayToSquare(int sizeOfObject, int **objectArray)
     return 0;
 }
 
-int printObjectArray(int sizeOfObject, int **objectArray)
+int printObjectArray(int sizeOfObject, float **objectArray)
 {
     int numberOfVectors = sizeOfObject * sizeOfObject;
 
@@ -77,42 +78,45 @@ int printObjectArray(int sizeOfObject, int **objectArray)
 
     for (int i = 0; i < numberOfVectors; i++)
     {
-        printf("%d,%d,%d\n", objectArray[i][0], objectArray[i][1], objectArray[i][2]);
+        printf("%f,%f,%f\n", objectArray[i][0], objectArray[i][1], objectArray[i][2]);
     }
     return 0;
 }
 
-int centerObjectArray(int sizeOfObject, int **objectArray)
+int centerObjectArray(int sizeOfObject, float **objectArray)
 {
     for (int i = 0; i < sizeOfObject * sizeOfObject; i++)
     {
         objectArray[i][0] = objectArray[i][0] - sizeOfObject / 2;
         objectArray[i][1] = objectArray[i][1] - sizeOfObject / 2;
     }
+    return 0;
 }
 
-int moveObjectRight(int sizeOfObject, int **objectArray, int displacement)
+int moveObjectRight(int sizeOfObject, float **objectArray, int displacement)
 {
     for (int i = 0; i < sizeOfObject * sizeOfObject; i++)
     {
         objectArray[i][0] = objectArray[i][0] + displacement;
     }
+    return 0;
 }
 
-int moveObjectUp(int sizeOfObject, int **objectArray, int displacement)
+int moveObjectUp(int sizeOfObject, float **objectArray, int displacement)
 {
     for (int i = 0; i < sizeOfObject * sizeOfObject; i++)
     {
         objectArray[i][1] = objectArray[i][1] + displacement;
     }
+    return 0;
 }
 
-int objectYawRotation(int sizeOfObject, int **objectArray, float angle)
+int objectYawRotation(int sizeOfObject, float **objectArray, float angle)
 {
     for (int i = 0; i < sizeOfObject * sizeOfObject; i++)
     {
-        objectArray[i][0] = floor(objectArray[i][0] * cos(angle) - objectArray[i][1] * sin(angle));
-        objectArray[i][1] = floor(objectArray[i][0] * sin(angle) + objectArray[i][1] * cos(angle));
+        objectArray[i][0] = objectArray[i][0] * (float)cos(angle) - objectArray[i][1] * (float)sin(angle);
+        objectArray[i][1] = objectArray[i][0] * (float)sin(angle) + objectArray[i][1] * (float)cos(angle);
     }
     return 0;
 }

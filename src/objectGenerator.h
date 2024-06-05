@@ -1,20 +1,20 @@
 #ifndef OBJECTGENERATOR_H
 #define OBJECTGENERATOR_H
 
-int **generateObjectArray(int sizeOfObject);
+float **generateObjectArray(int sizeOfObject);
 
-int freeObjectArray(int sizeOfObject, int **objectArray);
+int freeObjectArray(int sizeOfObject, float **objectArray);
 
-int centerObjectArray(int sizeOfObject, int **objectArray);
+int centerObjectArray(int sizeOfObject, float **objectArray);
 
-int transformObjectArrayToSquare(int sizeOfObject, int **objectArray);
+int transformObjectArrayToSquare(int sizeOfObject, float **objectArray);
 
-int printObjectArray(int sizeOfObject, int **objectArray);
+int printObjectArray(int sizeOfObject, float **objectArray);
 
-int moveObjectRight(int sizeOfObject, int **objectArray, int displacement);
+int moveObjectRight(int sizeOfObject, float **objectArray, int displacement);
 
-int moveObjectUp(int sizeOfObject, int **objectArray, int displacement);
+int moveObjectUp(int sizeOfObject, float **objectArray, int displacement);
 
-int objectYawRotation(int sizeOfObject, int **objectArray, float angle);
+int objectYawRotation(int sizeOfObject, float **objectArray, float angle);
 
 #endif
