@@ -5,7 +5,7 @@ CC = gcc
 CFLAGS = -Wall -Wpedantic -g -I src
 
 # Compiler library flags
-LDFLAGS = -lSDL2
+LDFLAGS = -lSDL2 -lm
 
 # Source directory
 SRC_DIR = src
