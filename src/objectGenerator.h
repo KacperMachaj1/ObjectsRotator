@@ -15,6 +15,4 @@ int moveObjectRight(int sizeOfObject, float **objectArray, int displacement);
 
 int moveObjectUp(int sizeOfObject, float **objectArray, int displacement);
 
-int objectYawRotation(int sizeOfObject, float **objectArray, float angle);
-
 #endif

@@ -1,13 +1,18 @@
 #include <SDL2/SDL.h>
-#include "objectGenerator.h"
+
 #include <unistd.h>
+#include <math.h>
+
+#include "objectGenerator.h"
 
 // Window dimensions
 const int WIDTH = 800;
 const int HEIGHT = 800;
-const int OBJECTSIZE = 300;
+const int OBJECTSIZE = 200;
 
-void displayObject(float **object, SDL_Renderer *renderer);
+void displayObject(float **object, SDL_Renderer *renderer, float *rotationVector);
+
+int rotateVector(float *vector, float *angle);
 
 // Function to set pixel color at (x, y) coordinates
 void setPixel(SDL_Renderer *renderer, int x, int y, Uint8 r, Uint8 g, Uint8 b)
@@ -21,7 +26,6 @@ int main(int argc, char **argv)
     float **object = (float **)generateObjectArray(OBJECTSIZE);
     transformObjectArrayToSquare(OBJECTSIZE, object);
     centerObjectArray(OBJECTSIZE, object);
-    printObjectArray(OBJECTSIZE, object);
 
     // Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
@@ -49,6 +53,11 @@ int main(int argc, char **argv)
         return 1;
     }
 
+    float *rotationVector = (float *)malloc(sizeof(float) * 3);
+    rotationVector[0] = 0.0f;
+    rotationVector[1] = 0.0f;
+    rotationVector[2] = 0.0f;
+
     // Main loop
     SDL_Event event;
     int running = 1;
@@ -68,12 +77,12 @@ int main(int argc, char **argv)
         SDL_RenderClear(renderer);
 
         // Display the object on the screen
-        displayObject(object, renderer);
-        objectYawRotation(OBJECTSIZE, object, 0.1);
+        displayObject(object, renderer, rotationVector);
 
         // Update the screen
         SDL_RenderPresent(renderer);
         sleep(0.1);
+        rotationVector[0] = rotationVector[0] + 0.1;
     }
 
     // Cleanup
@@ -82,14 +91,29 @@ int main(int argc, char **argv)
     SDL_Quit();
 
     freeObjectArray(OBJECTSIZE, object);
+    free(rotationVector);
 
     return 0;
 }
 
-void displayObject(float **object, SDL_Renderer *renderer)
+void displayObject(float **object, SDL_Renderer *renderer, float *rotationVector)
 {
+    float *vectorBuffer = (float *)malloc(3 * sizeof(float));
+
     for (int i = 0; i < OBJECTSIZE * OBJECTSIZE; i++)
     {
-        setPixel(renderer, floor(object[i][0] + WIDTH / 2), floor(HEIGHT - (object[i][1] + HEIGHT / 2)), 255, 255, 255);
+        memcpy(vectorBuffer, object[i], 3 * sizeof(float));
+        rotateVector(vectorBuffer, rotationVector);
+        setPixel(renderer, floor(vectorBuffer[0] + WIDTH / 2), floor(HEIGHT - (vectorBuffer[1] + HEIGHT / 2)), 255, 255, 255);
     }
+}
+
+int rotateVector(float *vector, float *angle)
+{
+    float newX = vector[0] * cosf(angle[0]) - vector[1] * sinf(angle[0]);
+    float newY = vector[0] * sinf(angle[0]) + vector[1] * cosf(angle[0]);
+    vector[0] = newX;
+    vector[1] = newY;
+
+    return 0;
 }

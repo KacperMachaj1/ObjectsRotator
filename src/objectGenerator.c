@@ -110,13 +110,3 @@ int moveObjectUp(int sizeOfObject, float **objectArray, int displacement)
     }
     return 0;
 }
-
-int objectYawRotation(int sizeOfObject, float **objectArray, float angle)
-{
-    for (int i = 0; i < sizeOfObject * sizeOfObject; i++)
-    {
-        objectArray[i][0] = objectArray[i][0] * (float)cos(angle) - objectArray[i][1] * (float)sin(angle);
-        objectArray[i][1] = objectArray[i][0] * (float)sin(angle) + objectArray[i][1] * (float)cos(angle);
-    }
-    return 0;
-}
