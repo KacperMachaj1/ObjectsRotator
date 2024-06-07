@@ -5,32 +5,48 @@
 
 #include "objectGenerator.h"
 
+// Define Frame rate for SDL
 #define FRAME_RATE 60
 #define FRAME_TIME (1000 / FRAME_RATE)
 
 // Window dimensions
 const int WIDTH = 800;
 const int HEIGHT = 800;
-const int OBJECTSIZE = 50;
+const int OBJECTSIZE = 100;
+const int NUMBEROFOBJECTS = 2;
 
-void displayObject(float **object, SDL_Renderer *renderer, float *rotationVector);
+void displayObjects(float ***objectsArray, SDL_Renderer *renderer, float *rotationVector, int **colorArray);
 
 int rotateVector(float *vector, float *angle);
 
-// Function to set pixel color at (x, y) coordinates
-void setPixel(SDL_Renderer *renderer, int x, int y, Uint8 r, Uint8 g, Uint8 b)
-{
-    SDL_SetRenderDrawColor(renderer, r, g, b, SDL_ALPHA_OPAQUE);
-    SDL_RenderDrawPoint(renderer, x, y);
-}
+void setPixel(SDL_Renderer *renderer, int x, int y, Uint8 r, Uint8 g, Uint8 b);
+
+int **createColorArray();
 
 int main(int argc, char **argv)
 {
-    float ***objectsArray = malloc(10 * sizeof(float **));
+    // Create the array contatining all objects
+    float ***objectsArray = (float ***)malloc(NUMBEROFOBJECTS * sizeof(float **));
 
+    int **colorArray = createColorArray();
+    colorArray[0][0] = 202;
+    colorArray[0][1] = 220;
+    colorArray[0][2] = 252;
+    colorArray[1][0] = 0;
+    colorArray[1][1] = 0;
+    colorArray[1][2] = 0;
+
+    // Initialize front
     objectsArray[0] = (float **)generateObjectArray(OBJECTSIZE);
     transformObjectArrayToSquare(OBJECTSIZE, objectsArray[0]);
     centerObjectArray(OBJECTSIZE, objectsArray[0]);
+    moveObjectRight(OBJECTSIZE, objectsArray[0], -100);
+
+    // Initialize back
+    objectsArray[1] = (float **)generateObjectArray(OBJECTSIZE);
+    transformObjectArrayToSquare(OBJECTSIZE, objectsArray[1]);
+    centerObjectArray(OBJECTSIZE, objectsArray[1]);
+    moveObjectRight(OBJECTSIZE, objectsArray[1], 100);
 
     // Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
@@ -85,16 +101,17 @@ int main(int argc, char **argv)
         SDL_RenderClear(renderer);
 
         // Display the object on the screen
-        displayObject(objectsArray[0], renderer, rotationVector);
+        displayObjects(objectsArray, renderer, rotationVector, colorArray);
 
         // Update the screen
         SDL_RenderPresent(renderer);
-        rotationVector[0] = rotationVector[0] + 2;
+        rotationVector[0] = rotationVector[0] + 1;
         rotationVector[1] = rotationVector[1] + 0;
-        rotationVector[2] = rotationVector[2] + 3;
+        rotationVector[2] = rotationVector[2] + 0;
 
         Uint32 frameTime = SDL_GetTicks() - frameStart;
-        if (frameTime < FRAME_TIME) {
+        if (frameTime < FRAME_TIME)
+        {
             SDL_Delay(FRAME_TIME - frameTime);
         }
     }
@@ -111,15 +128,18 @@ int main(int argc, char **argv)
     return 0;
 }
 
-void displayObject(float **object, SDL_Renderer *renderer, float *rotationVector)
+void displayObjects(float ***objectsArray, SDL_Renderer *renderer, float *rotationVector, int **colorArray)
 {
     float *vectorBuffer = (float *)malloc(3 * sizeof(float));
 
-    for (int i = 0; i < OBJECTSIZE * OBJECTSIZE; i++)
+    for (int i = 0; i < NUMBEROFOBJECTS; i++)
     {
-        memcpy(vectorBuffer, object[i], 3 * sizeof(float));
-        rotateVector(vectorBuffer, rotationVector);
-        setPixel(renderer, floor(vectorBuffer[0] + WIDTH / 2), floor(HEIGHT - (vectorBuffer[1] + HEIGHT / 2)), 202, 220, 252);
+        for (int j = 0; j < OBJECTSIZE * OBJECTSIZE; j++)
+        {
+            memcpy(vectorBuffer, objectsArray[i][j], 3 * sizeof(float));
+            rotateVector(vectorBuffer, rotationVector);
+            setPixel(renderer, floor(vectorBuffer[0] + WIDTH / 2), floor(HEIGHT - (vectorBuffer[1] + HEIGHT / 2)), colorArray[i][0], colorArray[i][1], colorArray[i][2]);
+        }
     }
 }
 
@@ -144,4 +164,20 @@ int rotateVector(float *vector, float *angle)
     vector[2] = newZ;
 
     return 0;
+}
+
+int **createColorArray()
+{
+    int **toReturn = (int **)malloc(NUMBEROFOBJECTS * sizeof(int *));
+    for (int i = 0; i < NUMBEROFOBJECTS; i++)
+    {
+        toReturn[i] = (int *)malloc(3 * sizeof(int));
+    }
+    return toReturn;
+}
+
+void setPixel(SDL_Renderer *renderer, int x, int y, Uint8 r, Uint8 g, Uint8 b)
+{
+    SDL_SetRenderDrawColor(renderer, r, g, b, SDL_ALPHA_OPAQUE);
+    SDL_RenderDrawPoint(renderer, x, y);
 }
