@@ -5,4 +5,6 @@ int **createColorArray(int numberOfObjects);
 
 void randomizeColors(int numberOfObjects, int **colorArray);
 
+void freeColorArray(int numberOfObjects, int **colorArray);
+
 #endif

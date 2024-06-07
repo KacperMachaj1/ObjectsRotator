@@ -16,7 +16,7 @@ int **createColorArray(int numberOfObjects)
 void randomizeColors(int numberOfObjects, int **colorArray)
 {
     srand(time(NULL));
-    
+
     for (int i = 0; i < numberOfObjects; i++)
     {
         for (int j = 0; j < 3; j++)
@@ -25,4 +25,13 @@ void randomizeColors(int numberOfObjects, int **colorArray)
         }
     }
     return;
+}
+
+void freeColorArray(int numberOfObjects, int **colorArray)
+{
+    for (int i = 0; i < numberOfObjects; i++)
+    {
+        free(colorArray[i]);
+    }
+    free(colorArray);
 }

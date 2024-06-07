@@ -22,18 +22,27 @@ int main(int argc, char **argv)
     int **colorArray = createColorArray(NUMBEROFOBJECTS);
     randomizeColors(NUMBEROFOBJECTS, colorArray);
 
-    // Initialize front
     objectsArray[0] = (float **)generateObjectArray(OBJECTSIZE);
     transformObjectArrayToSquare(OBJECTSIZE, objectsArray[0]);
     centerObjectArray(OBJECTSIZE, objectsArray[0]);
     moveObjectRight(OBJECTSIZE, objectsArray[0], -100);
 
-    // Initialize back
+
     objectsArray[1] = (float **)generateObjectArray(OBJECTSIZE);
     transformObjectArrayToSquare(OBJECTSIZE, objectsArray[1]);
     centerObjectArray(OBJECTSIZE, objectsArray[1]);
     moveObjectRight(OBJECTSIZE, objectsArray[1], 100);
 
+    objectsArray[2] = (float **)generateObjectArray(OBJECTSIZE);
+    transformObjectArrayToSquare(OBJECTSIZE, objectsArray[2]);
+    centerObjectArray(OBJECTSIZE, objectsArray[2]);
+    moveObjectUp(OBJECTSIZE, objectsArray[2], 100);
+
+    objectsArray[3] = (float **)generateObjectArray(OBJECTSIZE);
+    transformObjectArrayToSquare(OBJECTSIZE, objectsArray[3]);
+    centerObjectArray(OBJECTSIZE, objectsArray[3]);
+    moveObjectUp(OBJECTSIZE, objectsArray[3], -100);
+    
     // Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
@@ -60,10 +69,7 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    float *rotationVector = (float *)malloc(sizeof(float) * 3);
-    rotationVector[0] = 0.0f;
-    rotationVector[1] = 0.0f;
-    rotationVector[2] = 0.0f;
+    float *rotationVector = (float *)calloc(1, sizeof(float) * 3);
 
     // Main loop
     SDL_Event event;
@@ -92,8 +98,8 @@ int main(int argc, char **argv)
         // Update the screen
         SDL_RenderPresent(renderer);
         rotationVector[0] = rotationVector[0] + 1;
-        rotationVector[1] = rotationVector[1] + 0;
-        rotationVector[2] = rotationVector[2] + 0;
+        rotationVector[1] = rotationVector[1] + 1;
+        rotationVector[2] = rotationVector[2] + 1;
 
         Uint32 frameTime = SDL_GetTicks() - frameStart;
         if (frameTime < FRAME_TIME)
@@ -102,14 +108,18 @@ int main(int argc, char **argv)
         }
     }
 
-    // Cleanup
+    // SDL Cleanup
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
 
+    // Objects Cleanup
     freeObjectArray(OBJECTSIZE, objectsArray[0]);
     free(rotationVector);
     free(objectsArray);
+
+    // Colors Cleanup
+    freeColorArray(NUMBEROFOBJECTS, colorArray);
 
     return 0;
 }

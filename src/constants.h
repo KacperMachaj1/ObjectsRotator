@@ -9,6 +9,6 @@
 
 // Object creation constants
 #define OBJECTSIZE 100
-#define NUMBEROFOBJECTS 2
+#define NUMBEROFOBJECTS 4
 
 #endif
