@@ -1,19 +1,8 @@
 #include <SDL2/SDL.h>
-
 #include <unistd.h>
 #include <math.h>
-
 #include "objectGenerator.h"
-
-// Define Frame rate for SDL
-#define FRAME_RATE 60
-#define FRAME_TIME (1000 / FRAME_RATE)
-
-// Window dimensions
-const int WIDTH = 800;
-const int HEIGHT = 800;
-const int OBJECTSIZE = 100;
-const int NUMBEROFOBJECTS = 2;
+#include "constants.h"
 
 void displayObjects(float ***objectsArray, SDL_Renderer *renderer, float *rotationVector, int **colorArray);
 
