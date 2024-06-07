@@ -11,4 +11,4 @@
 #define OBJECTSIZE 100
 #define NUMBEROFOBJECTS 2
 
-#endif // CONSTANTS_H
+#endif

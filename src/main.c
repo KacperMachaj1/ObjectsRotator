@@ -1,8 +1,12 @@
 #include <SDL2/SDL.h>
+
+#include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
+
 #include "objectGenerator.h"
 #include "constants.h"
+#include "colorUtils.h"
 
 void displayObjects(float ***objectsArray, SDL_Renderer *renderer, float *rotationVector, int **colorArray);
 
@@ -10,20 +14,13 @@ int rotateVector(float *vector, float *angle);
 
 void setPixel(SDL_Renderer *renderer, int x, int y, Uint8 r, Uint8 g, Uint8 b);
 
-int **createColorArray();
-
 int main(int argc, char **argv)
 {
     // Create the array contatining all objects
     float ***objectsArray = (float ***)malloc(NUMBEROFOBJECTS * sizeof(float **));
 
-    int **colorArray = createColorArray();
-    colorArray[0][0] = 202;
-    colorArray[0][1] = 220;
-    colorArray[0][2] = 252;
-    colorArray[1][0] = 0;
-    colorArray[1][1] = 0;
-    colorArray[1][2] = 0;
+    int **colorArray = createColorArray(NUMBEROFOBJECTS);
+    randomizeColors(NUMBEROFOBJECTS, colorArray);
 
     // Initialize front
     objectsArray[0] = (float **)generateObjectArray(OBJECTSIZE);
@@ -153,16 +150,6 @@ int rotateVector(float *vector, float *angle)
     vector[2] = newZ;
 
     return 0;
-}
-
-int **createColorArray()
-{
-    int **toReturn = (int **)malloc(NUMBEROFOBJECTS * sizeof(int *));
-    for (int i = 0; i < NUMBEROFOBJECTS; i++)
-    {
-        toReturn[i] = (int *)malloc(3 * sizeof(int));
-    }
-    return toReturn;
 }
 
 void setPixel(SDL_Renderer *renderer, int x, int y, Uint8 r, Uint8 g, Uint8 b)
