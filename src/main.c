@@ -5,10 +5,13 @@
 
 #include "objectGenerator.h"
 
+#define FRAME_RATE 60
+#define FRAME_TIME (1000 / FRAME_RATE)
+
 // Window dimensions
 const int WIDTH = 800;
 const int HEIGHT = 800;
-const int OBJECTSIZE = 300;
+const int OBJECTSIZE = 50;
 
 void displayObject(float **object, SDL_Renderer *renderer, float *rotationVector);
 
@@ -23,9 +26,11 @@ void setPixel(SDL_Renderer *renderer, int x, int y, Uint8 r, Uint8 g, Uint8 b)
 
 int main(int argc, char **argv)
 {
-    float **object = (float **)generateObjectArray(OBJECTSIZE);
-    transformObjectArrayToSquare(OBJECTSIZE, object);
-    centerObjectArray(OBJECTSIZE, object);
+    float ***objectsArray = malloc(10 * sizeof(float **));
+
+    objectsArray[0] = (float **)generateObjectArray(OBJECTSIZE);
+    transformObjectArrayToSquare(OBJECTSIZE, objectsArray[0]);
+    centerObjectArray(OBJECTSIZE, objectsArray[0]);
 
     // Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
@@ -63,6 +68,9 @@ int main(int argc, char **argv)
     int running = 1;
     while (running)
     {
+
+        Uint32 frameStart = SDL_GetTicks();
+
         // Process events
         while (SDL_PollEvent(&event))
         {
@@ -77,14 +85,18 @@ int main(int argc, char **argv)
         SDL_RenderClear(renderer);
 
         // Display the object on the screen
-        displayObject(object, renderer, rotationVector);
+        displayObject(objectsArray[0], renderer, rotationVector);
 
         // Update the screen
         SDL_RenderPresent(renderer);
-        sleep(0.01);
         rotationVector[0] = rotationVector[0] + 2;
         rotationVector[1] = rotationVector[1] + 0;
         rotationVector[2] = rotationVector[2] + 3;
+
+        Uint32 frameTime = SDL_GetTicks() - frameStart;
+        if (frameTime < FRAME_TIME) {
+            SDL_Delay(FRAME_TIME - frameTime);
+        }
     }
 
     // Cleanup
@@ -92,8 +104,9 @@ int main(int argc, char **argv)
     SDL_DestroyWindow(window);
     SDL_Quit();
 
-    freeObjectArray(OBJECTSIZE, object);
+    freeObjectArray(OBJECTSIZE, objectsArray[0]);
     free(rotationVector);
+    free(objectsArray);
 
     return 0;
 }
