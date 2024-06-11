@@ -11,10 +11,10 @@ int transformObjectArrayToSquare(int sizeOfObject, float **objectArray);
 
 int printObjectArray(int sizeOfObject, float **objectArray);
 
-int moveObjectRight(int sizeOfObject, float **objectArray, int displacement);
+int moveObjectRight(int sizeOfObject, float **objectArray, float displacement);
 
-int moveObjectUp(int sizeOfObject, float **objectArray, int displacement);
+int moveObjectUp(int sizeOfObject, float **objectArray, float displacement);
 
-int moveObjectFront(int sizeOfObject, float **objectArray, int displacement);
+int moveObjectFront(int sizeOfObject, float **objectArray, float displacement);
 
 #endif

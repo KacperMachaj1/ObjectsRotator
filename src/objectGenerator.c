@@ -62,7 +62,7 @@ int centerObjectArray(int sizeOfObject, float **objectArray)
     return 0;
 }
 
-int moveObjectRight(int sizeOfObject, float **objectArray, int displacement)
+int moveObjectRight(int sizeOfObject, float **objectArray, float displacement)
 {
     for (int i = 0; i < sizeOfObject * sizeOfObject; i++)
     {
@@ -71,7 +71,7 @@ int moveObjectRight(int sizeOfObject, float **objectArray, int displacement)
     return 0;
 }
 
-int moveObjectUp(int sizeOfObject, float **objectArray, int displacement)
+int moveObjectUp(int sizeOfObject, float **objectArray, float displacement)
 {
     for (int i = 0; i < sizeOfObject * sizeOfObject; i++)
     {
@@ -80,7 +80,7 @@ int moveObjectUp(int sizeOfObject, float **objectArray, int displacement)
     return 0;
 }
 
-int moveObjectFront(int sizeOfObject, float **objectArray, int displacement)
+int moveObjectFront(int sizeOfObject, float **objectArray, float displacement)
 {
     for (int i = 0; i < sizeOfObject * sizeOfObject; i++)
     {
