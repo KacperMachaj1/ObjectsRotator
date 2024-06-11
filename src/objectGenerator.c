@@ -4,12 +4,12 @@
 
 #include "objectGenerator.h"
 #include "tableUtils.h"
- 
+
 float **generateObjectArray(int sizeOfObject)
 {
     // An object is a 2d array with n*n 3d vectors
     int numberOfVectors = sizeOfObject * sizeOfObject;
-    
+
     return createTable(numberOfVectors, 3);
 }
 
@@ -76,6 +76,15 @@ int moveObjectUp(int sizeOfObject, float **objectArray, int displacement)
     for (int i = 0; i < sizeOfObject * sizeOfObject; i++)
     {
         objectArray[i][1] = objectArray[i][1] + displacement;
+    }
+    return 0;
+}
+
+int moveObjectFront(int sizeOfObject, float **objectArray, int displacement)
+{
+    for (int i = 0; i < sizeOfObject * sizeOfObject; i++)
+    {
+        objectArray[i][2] = objectArray[i][2] + displacement;
     }
     return 0;
 }

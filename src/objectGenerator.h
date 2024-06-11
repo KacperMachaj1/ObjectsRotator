@@ -15,4 +15,6 @@ int moveObjectRight(int sizeOfObject, float **objectArray, int displacement);
 
 int moveObjectUp(int sizeOfObject, float **objectArray, int displacement);
 
+int moveObjectFront(int sizeOfObject, float **objectArray, int displacement);
+
 #endif
