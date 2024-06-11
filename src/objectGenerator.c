@@ -3,41 +3,14 @@
 #include <math.h>
 
 #include "objectGenerator.h"
-
+#include "tableUtils.h"
+ 
 float **generateObjectArray(int sizeOfObject)
 {
     // An object is a 2d array with n*n 3d vectors
     int numberOfVectors = sizeOfObject * sizeOfObject;
-
-    // Allocate memory for top level array
-    float **objectArray = (float **)malloc(numberOfVectors * sizeof(float *));
-
-    if (objectArray == NULL)
-    {
-        fprintf(stderr, "Memory allocation failed\n");
-        return 0;
-    }
-
-    // Allocate memory for each vector
-    for (int i = 0; i < numberOfVectors; i++)
-    {
-        objectArray[i] = (float *)malloc(3 * sizeof(float));
-        if (objectArray[i] == NULL)
-        {
-            fprintf(stderr, "Memory allocation failed\n");
-            // Free previously allocated rows
-            for (int j = 0; j < i; j++)
-            {
-                free(objectArray[j]);
-            }
-            free(objectArray);
-            return 0;
-        }
-    }
-
-    printf("Object array generated succesfully\n");
-
-    return objectArray;
+    
+    return createTable(numberOfVectors, 3);
 }
 
 int freeObjectArray(int sizeOfObject, float **objectArray)
@@ -45,11 +18,7 @@ int freeObjectArray(int sizeOfObject, float **objectArray)
     // An object is a 2d array with n*n 3d vectors
     int numberOfVectors = sizeOfObject * sizeOfObject;
 
-    for (int i = 0; i < numberOfVectors; i++)
-    {
-        free(objectArray[i]);
-    }
-    free(objectArray);
+    freeTable(objectArray, numberOfVectors, 3);
 
     return 0;
 }
