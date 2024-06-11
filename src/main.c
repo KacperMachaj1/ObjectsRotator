@@ -7,6 +7,7 @@
 #include "objectGenerator.h"
 #include "constants.h"
 #include "colorUtils.h"
+#include "tableUtils.h"
 
 void displayObjects(float ***objectsArray, SDL_Renderer *renderer, float *rotationVector, int **colorArray);
 
@@ -27,7 +28,6 @@ int main(int argc, char **argv)
     centerObjectArray(OBJECTSIZE, objectsArray[0]);
     moveObjectRight(OBJECTSIZE, objectsArray[0], -100);
 
-
     objectsArray[1] = (float **)generateObjectArray(OBJECTSIZE);
     transformObjectArrayToSquare(OBJECTSIZE, objectsArray[1]);
     centerObjectArray(OBJECTSIZE, objectsArray[1]);
@@ -42,7 +42,7 @@ int main(int argc, char **argv)
     transformObjectArrayToSquare(OBJECTSIZE, objectsArray[3]);
     centerObjectArray(OBJECTSIZE, objectsArray[3]);
     moveObjectUp(OBJECTSIZE, objectsArray[3], -100);
-    
+
     // Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
