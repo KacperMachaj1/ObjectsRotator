@@ -17,4 +17,6 @@ int moveObjectUp(int sizeOfObject, float **objectArray, float displacement);
 
 int moveObjectFront(int sizeOfObject, float **objectArray, float displacement);
 
+int rotateObject(int sizeOfObject, float **objectArray, float* rotationVector);
+
 #endif

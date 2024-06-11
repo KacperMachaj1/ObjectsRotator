@@ -4,6 +4,7 @@
 
 #include "objectGenerator.h"
 #include "tableUtils.h"
+#include "vectorUtils.h"
 
 float **generateObjectArray(int sizeOfObject)
 {
@@ -85,6 +86,15 @@ int moveObjectFront(int sizeOfObject, float **objectArray, float displacement)
     for (int i = 0; i < sizeOfObject * sizeOfObject; i++)
     {
         objectArray[i][2] = objectArray[i][2] + displacement;
+    }
+    return 0;
+}
+
+int rotateObject(int sizeOfObject, float **objectArray, float *rotationVector)
+{
+    for (int i = 0; i < sizeOfObject * sizeOfObject; i++)
+    {
+        rotateVector(objectArray[i], rotationVector);
     }
     return 0;
 }
