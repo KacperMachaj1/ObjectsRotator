@@ -3,6 +3,8 @@
 
 float **createTable(int width, int height);
 
-int freeTable(float **objectArray, int width, int height);
+int freeTable(float **table, int width, int height);
+
+int resetTable(float **table, int width, int height, float newVal);
 
 #endif

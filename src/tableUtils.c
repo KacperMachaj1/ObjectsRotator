@@ -33,14 +33,26 @@ float **createTable(int width, int height)
     return table;
 }
 
-int freeTable(float **objectArray, int width, int height)
+int freeTable(float **table, int width, int height)
 {
 
     for (int i = 0; i < width; i++)
     {
-        free(objectArray[i]);
+        free(table[i]);
     }
-    free(objectArray);
+    free(table);
 
+    return 0;
+}
+
+int resetTable(float **table, int width, int height, float newVal)
+{
+    for (int i = 0; i < width; i++)
+    {
+        for (int j = 0; j < height; j++)
+        {
+            table[i][j] = newVal;
+        }
+    }
     return 0;
 }
