@@ -24,8 +24,8 @@ default: all
 
 all: $(TARGET)
 
-run: $(TARGET)
-	./$<
+run: clean $(TARGET)
+	./$(TARGET)
 
 # Rule to link object files into the final executable
 $(TARGET): $(OBJS)
