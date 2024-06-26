@@ -1,11 +1,13 @@
-#include "colorUtils.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
 
+#include "colorUtils.h"
+
 int **createColorArray(int numberOfObjects)
 {
     int **toReturn = (int **)malloc(numberOfObjects * sizeof(int *));
+
     for (int i = 0; i < numberOfObjects; i++)
     {
         toReturn[i] = (int *)malloc(3 * sizeof(int));
