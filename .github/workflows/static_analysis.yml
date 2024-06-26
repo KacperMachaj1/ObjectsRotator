@@ -1,0 +1,23 @@
+name: Clang Static Analyzer
+
+on: [push, pull_request]
+
+jobs:
+  clang-analyzer:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install Clang, Clang-Tidy, Bear, SDL2
+      run: sudo apt-get update && sudo apt-get install -y clang clang-tidy bear libsdl2-2.0 libsdl2-dev
+
+    - name: Generate compilation database
+      run: |
+        bear -- make
+
+    - name: Run Clang Static Analyzer
+      run: |
+        clang-tidy -p . $(find . -name "*.c" -or -name "*.h")
+        
