@@ -8,7 +8,7 @@
 #define HEIGHT 800
 
 // Object creation constants
-#define OBJECTSIZE 100
-#define NUMBEROFOBJECTS 4
+#define OBJECTSIZE 150
+#define NUMBEROFOBJECTS 6
 
 #endif
