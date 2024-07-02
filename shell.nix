@@ -1,7 +1,7 @@
 { pkgs ? import <nixpkgs> {} }:
 
 pkgs.mkShell {
-  name = "objectRotator Nix Shell file";
+  name = "objectsRotator Nix Shell file";
   buildInputs = with pkgs; [
      cmake
      gcc
@@ -9,6 +9,6 @@ pkgs.mkShell {
   ];
   
   shellHook = ''
-   echo "Starting objectRotator development envoriment";
+   echo "Starting objectsRotator development ENV";
   '';
 }
