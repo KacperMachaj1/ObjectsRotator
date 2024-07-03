@@ -28,6 +28,14 @@ sudo apt install libsdl2-dev
 sudo dnf check-update
 sudo dnf install SDL2-devel
  ```
+
+### NIX
+If your system has Nix package manager installed you can just run nix-shell to enter a shell with the dependencys installed. 
+
+```sh
+nix-shell
+ ```
+
 #
  To run the project you can simply use the provided Makefile. Just navigate to the project directory in the terminal and execute
  
