@@ -2,7 +2,7 @@
 CC = gcc
 
 # Compiler flags
-CFLAGS = -Wall -Wpedantic -g -I src
+CFLAGS = -Wall -Wpedantic -g -I src -O3
 
 # Compiler library flags
 LDFLAGS = -lSDL2 -lm
