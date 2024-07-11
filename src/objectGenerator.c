@@ -98,3 +98,29 @@ int rotateObject(int sizeOfObject, float **objectArray, float *rotationVector)
     }
     return 0;
 }
+
+float ***generateSquare(int sizeOfObject)
+{
+    float ***objectsArray = (float ***)malloc(6 * sizeof(float **));
+
+    float rotationVectorArray[6][3] = {{0, 0, 0}, {0, 0, 0}, {90, 0, 0}, {90, 0, 0}, {0, 90, 0}, {0, 90, 0}};
+
+    float displacementVectorArray[6][3] = {{sizeOfObject / 2, 0, 0},
+                                                         {-(sizeOfObject / 2), 0},
+                                                         {0, sizeOfObject / 2, 0},
+                                                         {0, -(sizeOfObject / 2), 0},
+                                                         {0, 0, sizeOfObject / 2},
+                                                         {0, 0, -(sizeOfObject / 2)}};
+
+    for (int i = 0; i < 6; i++)
+    {
+        objectsArray[i] = (float **)generateObjectArray(sizeOfObject);
+        transformObjectArrayToSquare(sizeOfObject, objectsArray[i]);
+        centerObjectArray(sizeOfObject, objectsArray[i]);
+        rotateObject(sizeOfObject, objectsArray[i], rotationVectorArray[i]);
+        moveObjectFront(sizeOfObject, objectsArray[i], displacementVectorArray[i][0]);
+        moveObjectUp(sizeOfObject, objectsArray[i], displacementVectorArray[i][1]);
+        moveObjectRight(sizeOfObject, objectsArray[i], displacementVectorArray[i][2]);
+    }
+    return objectsArray;
+}

@@ -11,71 +11,23 @@
 #include "tableUtils.h"
 #include "vectorUtils.h"
 
- void displayObjects(float ***objectsArray, SDL_Renderer *renderer, float *rotationVector, int **colorArray, float **displayTable);
+void displayObjects(float ***objectsArray, SDL_Renderer *renderer, float *rotationVector, int **colorArray, float **displayTable);
 
 void setPixel(SDL_Renderer *renderer, int x, int y, Uint8 r, Uint8 g, Uint8 b);
 
 int main(int argc, char **argv)
 {
     // Create the array contatining all objects
-    float ***objectsArray = (float ***)malloc(NUMBEROFOBJECTS * sizeof(float **));
+    float ***objectsArray = generateSquare(OBJECTSIZE);
 
     int **colorArray = createColorArray(NUMBEROFOBJECTS);
     randomizeColors(NUMBEROFOBJECTS, colorArray);
-
-    {
-        objectsArray[0] = (float **)generateObjectArray(OBJECTSIZE);
-        transformObjectArrayToSquare(OBJECTSIZE, objectsArray[0]);
-        centerObjectArray(OBJECTSIZE, objectsArray[0]);
-        moveObjectFront(OBJECTSIZE, objectsArray[0], OBJECTSIZE / 2);
-
-        objectsArray[1] = (float **)generateObjectArray(OBJECTSIZE);
-        transformObjectArrayToSquare(OBJECTSIZE, objectsArray[1]);
-        centerObjectArray(OBJECTSIZE, objectsArray[1]);
-        moveObjectFront(OBJECTSIZE, objectsArray[1], -(OBJECTSIZE / 2));
-
-        objectsArray[2] = (float **)generateObjectArray(OBJECTSIZE);
-        transformObjectArrayToSquare(OBJECTSIZE, objectsArray[2]);
-        centerObjectArray(OBJECTSIZE, objectsArray[2]);
-        float *tempRotationVector = (float *)calloc(1, sizeof(float) * 3);
-        tempRotationVector[0] = 90;
-        tempRotationVector[1] = 0;
-        tempRotationVector[2] = 0;
-        rotateObject(OBJECTSIZE, objectsArray[2], tempRotationVector);
-        moveObjectUp(OBJECTSIZE, objectsArray[2], -(OBJECTSIZE / 2));
-
-        objectsArray[3] = (float **)generateObjectArray(OBJECTSIZE);
-        transformObjectArrayToSquare(OBJECTSIZE, objectsArray[3]);
-        centerObjectArray(OBJECTSIZE, objectsArray[3]);
-        tempRotationVector[0] = 90;
-        tempRotationVector[1] = 0;
-        tempRotationVector[2] = 0;
-        rotateObject(OBJECTSIZE, objectsArray[3], tempRotationVector);
-        moveObjectUp(OBJECTSIZE, objectsArray[3], OBJECTSIZE / 2);
-
-        objectsArray[4] = (float **)generateObjectArray(OBJECTSIZE);
-        transformObjectArrayToSquare(OBJECTSIZE, objectsArray[4]);
-        centerObjectArray(OBJECTSIZE, objectsArray[4]);
-        tempRotationVector[0] = 0;
-        tempRotationVector[1] = 90;
-        tempRotationVector[2] = 0;
-        rotateObject(OBJECTSIZE, objectsArray[4], tempRotationVector);
-        moveObjectRight(OBJECTSIZE, objectsArray[4], OBJECTSIZE / 2);
-
-        objectsArray[5] = (float **)generateObjectArray(OBJECTSIZE);
-        transformObjectArrayToSquare(OBJECTSIZE, objectsArray[5]);
-        centerObjectArray(OBJECTSIZE, objectsArray[5]);
-        tempRotationVector[0] = 0;
-        tempRotationVector[1] = 90;
-        tempRotationVector[2] = 0;
-        rotateObject(OBJECTSIZE, objectsArray[5], tempRotationVector);
-        moveObjectRight(OBJECTSIZE, objectsArray[5], -(OBJECTSIZE / 2));
-    }
 
     // Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
         printf("SDL initialization failed: %s\n", SDL_GetError());
+
         return 1;
     }
 
@@ -182,15 +134,14 @@ void displayObjects(float ***objectsArray, SDL_Renderer *renderer, float *rotati
             // int random_bool = rand() % 1;
             // if (!random_bool)
             // {
-                if ((x > 0 && x < WIDTH) && (y > 0 && y < HEIGHT))
+            if ((x > 0 && x < WIDTH) && (y > 0 && y < HEIGHT))
+            {
+                if (z > displayTable[x][y])
                 {
-                    if (z > displayTable[x][y])
-                    {
-                        displayTable[x][y] = z;
-                        setPixel(renderer, x, y, colorArray[i][0], colorArray[i][1], colorArray[i][2]);
-                    }
+                    displayTable[x][y] = z;
+                    setPixel(renderer, x, y, colorArray[i][0], colorArray[i][1], colorArray[i][2]);
                 }
-
+            }
 
             // setPixel(renderer, floor(vectorBuffer[0] + WIDTH / 2), floor(HEIGHT - (vectorBuffer[1] + HEIGHT / 2)), colorArray[i][0], colorArray[i][1], colorArray[i][2]);
         }

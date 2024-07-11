@@ -1,6 +1,8 @@
 #ifndef OBJECTGENERATOR_H
 #define OBJECTGENERATOR_H
 
+float ***generateSquare(int sizeOfObject);
+
 float **generateObjectArray(int sizeOfObject);
 
 int freeObjectArray(int sizeOfObject, float **objectArray);
@@ -17,6 +19,6 @@ int moveObjectUp(int sizeOfObject, float **objectArray, float displacement);
 
 int moveObjectFront(int sizeOfObject, float **objectArray, float displacement);
 
-int rotateObject(int sizeOfObject, float **objectArray, float* rotationVector);
+int rotateObject(int sizeOfObject, float **objectArray, float *rotationVector);
 
 #endif
